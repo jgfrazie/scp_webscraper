@@ -29,7 +29,7 @@ const (
 )
 
 // Use this when threading for multiple URL requests as to not get flagged by the server as an attack
-const ServerResponseGuard = time.Millisecond * 50
+const ServerResponseGuard = time.Millisecond * 100
 var wg sync.WaitGroup
 
 
@@ -179,7 +179,7 @@ func SCPInfoCollector(scpURL string) *scpProcessor.SCPEntity {
 // An error is when any part of the SCPEntity struct is left as undefined
 func ScraperErrorRate(allSCPs *[]*[]string, checkSeries int) float32 {
 	var numErrors uint64	// The atomic counter for errors
-	var numEntities uint64 = uint64(len(*allSCPs) * len(*((*allSCPs)[checkSeries])))
+	var numEntities uint64 = uint64(len(*allSCPs) * len(*((*allSCPs)[checkSeries]))) * 4
 
 	// Checks if an SCP is fully scrapable. If not, then it is counted as an error
 	checkSCP := func(scpURL string, errorCounter *uint64) {
